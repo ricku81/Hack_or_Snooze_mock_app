@@ -25,6 +25,9 @@ function generateStoryMarkup (story) {
 	const hostName = story.getHostName();
 	return $(`
       <li id="${story.storyId}">
+				<span class="star">
+					<i class="far fa-star"></i>
+				</span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -62,6 +65,20 @@ async function addNewStory () {
 		author : `${newAuthor}`,
 		url    : `${newUrl}`
 	});
+
+	const $story = generateStoryMarkup(newStory);
+	$allStoriesList.prepend($story);
+
 	return newStory;
 }
-$submitForm.on('submit', addNewStory);
+
+// on submit, call addNewStory method and clear inputs of form. Hide form.
+$submitForm.on('submit', function (evt) {
+	evt.preventDefault();
+	addNewStory();
+
+	$('#create-author').val('');
+	$('#create-title').val('');
+	$('#create-url').val('');
+	$submitForm.hide();
+});

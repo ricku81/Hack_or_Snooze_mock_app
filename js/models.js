@@ -194,4 +194,6 @@ class User {
 			return null;
 		}
 	}
+
+	// allows the User to favorite a story
 }
