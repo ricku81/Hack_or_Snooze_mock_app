@@ -202,29 +202,28 @@ class User {
 
 		const favorites = currentUser.favorites;
 
-		// loop through favorites to see if target is already a favorite
-		favorites.forEach(async function (val) {
-			console.log(val.storyId);
-
-			if (storyId === val.storyId) {
-				// call API for DELETE favorite
-				const res = await axios({
-					url    : `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
-					method : 'DELETE',
-					params : { token }
-				});
-				return target.setAttribute('class', 'far fa-star');
+		if (favorites === []) {
+			// call API for POST favorite
+			const res = await axios({
+				url    : `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
+				method : 'POST',
+				params : { token }
+			});
+			return target.setAttribute('class', 'fas fa-star');
+		}
+		else if (favorites !== []) {
+			for (val of favorites) {
+				if (val.storyId === storyId) {
+					// call API for DELETE favorite
+					const res = await axios({
+						url    : `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
+						method : 'DELETE',
+						params : { token }
+					});
+					return target.setAttribute('class', 'far fa-star');
+				}
 			}
-			else {
-				// call API for POST favorite
-				const res = await axios({
-					url    : `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
-					method : 'POST',
-					params : { token }
-				});
-				return target.setAttribute('class', 'fas fa-star');
-			}
-		});
+		}
 
 		console.log(target);
 		console.log(target.getAttribute('class'));
