@@ -199,10 +199,9 @@ class User {
 	async favStory (target) {
 		const token = currentUser.loginToken;
 		const storyId = target.parentElement.parentElement.getAttribute('id');
-
 		const favorites = currentUser.favorites;
 
-		if (favorites === []) {
+		if (favorites.length === 0) {
 			// call API for POST favorite
 			const res = await axios({
 				url    : `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
@@ -211,7 +210,7 @@ class User {
 			});
 			return target.setAttribute('class', 'fas fa-star');
 		}
-		else if (favorites !== []) {
+		else {
 			for (val of favorites) {
 				if (val.storyId === storyId) {
 					// call API for DELETE favorite
@@ -224,7 +223,6 @@ class User {
 				}
 			}
 		}
-
 		console.log(target);
 		console.log(target.getAttribute('class'));
 	}
