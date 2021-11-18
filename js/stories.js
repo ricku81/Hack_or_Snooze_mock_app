@@ -82,3 +82,8 @@ $submitForm.on('submit', function (evt) {
 	$('#create-url').val('');
 	$submitForm.hide();
 });
+
+// adds eventListener to stars to add/remove favorites of User
+$('.fa-star').on('click', function (evt) {
+	favStory(evt.target);
+});

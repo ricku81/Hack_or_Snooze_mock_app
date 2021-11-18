@@ -196,4 +196,7 @@ class User {
 	}
 
 	// allows the User to favorite a story
+	async favStory (evt) {
+		const res = await axios.post(`${BASE_URL}/users/${currentUser.username}/favorites/${evt.storyId}`);
+	}
 }
